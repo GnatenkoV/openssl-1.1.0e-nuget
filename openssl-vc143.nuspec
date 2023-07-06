@@ -22,8 +22,8 @@
 
         <file src="output\Program Files\OpenSSL\include\openssl\*.h" 		target="build\native\include\openssl\" />
 
-        <file src="output\Program Files\OpenSSL\bin\libssl.lib"             target="build\native\bin\libssl-1_1_1.lib" />
-        <file src="output\Program Files\OpenSSL\bin\libcrypto.lib"          target="build\native\bin\libcrypto-1_1_1.lib" />
+        <file src="output\Program Files\OpenSSL\lib\libssl.lib"             target="build\native\bin\libssl-1_1_1.lib" />
+        <file src="output\Program Files\OpenSSL\lib\libcrypto.lib"          target="build\native\bin\libcrypto-1_1_1.lib" />
         <file src="output\Program Files\OpenSSL\bin\libssl-1_1-x64.dll"     target="build\native\bin\libssl-1_1_1.dll" />
         <file src="output\Program Files\OpenSSL\bin\libcrypto-1_1-x64.dll"  target="build\native\bin\libcrypto-1_1_1.dll" />
     </files>
