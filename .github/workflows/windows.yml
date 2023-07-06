@@ -39,7 +39,7 @@ jobs:
     - name: Config
       working-directory: _build
       run: |
-        perl "${{github.workspace}}\openssl\Configure" no-makedepend no-deprecated no-asm -DOPENSSL_SMALL_FOOTPRINT VC-WIN64A
+        perl "${{github.workspace}}\openssl\Configure" VC-WIN64A
         perl configdata.pm --dump
         
     - name: Build
@@ -49,7 +49,7 @@ jobs:
     - name: install
       run: |
         mkdir output
-        nmake install DESTDIR=output
+        nmake install_sw DESTDIR=../output
       working-directory: _build
       
     - name: Pack NuGet (Package)
