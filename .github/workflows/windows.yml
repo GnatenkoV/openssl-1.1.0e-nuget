@@ -39,7 +39,7 @@ jobs:
     - name: config
       working-directory: build
       run: |
-        perl "${{github.workspace}}\openssl\Configure" VC-WIN64A
+        perl "${{github.workspace}}\openssl\Configure" --banner=Configured no-makedepend VC-WIN64A
         
     - name: build
       working-directory: build
