@@ -48,15 +48,15 @@ jobs:
       
     - name: install
       run: |
-        mkdir dest
-        nmake install DESTDIR=dest
+        mkdir output
+        nmake install DESTDIR=output
       working-directory: _build
       
-    #- name: Pack NuGet (Package)
-    #  run: nuget pack openssl-1.1.0e-vc143.nuspec
+    - name: Pack NuGet (Package)
+      run: nuget pack openssl-vc143.nuspec
 
-    #- name: Publish NuGet
-    #  if: github.event_name != 'pull_request'
-    #  run: |
-    #    nuget sources Add -Name github -Source https://nuget.pkg.github.com/${{github.repository_owner}}/index.json -Username ${{github.repository_owner}} -Password ${{github.token}}
-    #    nuget push *.nupkg -Source github -SkipDuplicate -ApiKey ${{github.token}}
+    - name: Publish NuGet
+      if: github.event_name != 'pull_request'
+      run: |
+        nuget sources Add -Name github -Source https://nuget.pkg.github.com/${{github.repository_owner}}/index.json -Username ${{github.repository_owner}} -Password ${{github.token}}
+        nuget push *.nupkg -Source github -SkipDuplicate -ApiKey ${{github.token}}
