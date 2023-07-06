@@ -36,7 +36,7 @@ jobs:
     - name: config
       working-directory: build
       run: |
-        perl .\..\openssl\Configure VC-WIN64A
+        perl "${{github.workspace}}\..\openssl\Configure" VC-WIN64A
         
     - name: build
       working-directory: build
