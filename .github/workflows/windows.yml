@@ -36,18 +36,17 @@ jobs:
     - name: config
       working-directory: build
       run: |
-        perl ..\openssl\Configure --banner=Configured no-makedepend enable-fips
-        perl .\openssl\configdata.pm --dump
+        perl .\..\openssl\Configure VC-WIN64A
         
     - name: build
       working-directory: build
-      run: nmake /S
+      run: nmake 
       
     - name: install
-      working-directory: build
       run: |
         mkdir dest
         nmake install DESTDIR=dest
+      working-directory: build
       
     #- name: Pack NuGet (Package)
     #  run: nuget pack openssl-1.1.0e-vc143.nuspec
