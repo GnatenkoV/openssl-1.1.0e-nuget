@@ -1,0 +1,59 @@
+name: windows
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:  
+    runs-on: windows-2022
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    - name: Add MSVC to PATH
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: win64
+        toolset: 14.30
+        vsversion: 17.5
+        sdk: 10.0.20348.0
+        
+    - name: Add NASM to PATH
+      uses: ilammy/setup-nasm@v1
+      with:
+        platform: win64
+        
+    - name: Add PERL to PATH    
+      uses: shogo82148/actions-setup-perl@v1
+    
+    - name: prepare the build directory
+      run: mkdir build
+      
+    - name: config
+      working-directory: build
+      run: |
+        perl ..\openssl\Configure --banner=Configured no-makedepend enable-fips
+        perl .\openssl\configdata.pm --dump
+        
+    - name: build
+      working-directory: build
+      run: nmake /S
+      
+    - name: install
+      working-directory: build
+      run: |
+        mkdir dest
+        nmake install DESTDIR=dest
+      
+    #- name: Pack NuGet (Package)
+    #  run: nuget pack openssl-1.1.0e-vc143.nuspec
+
+    #- name: Publish NuGet
+    #  if: github.event_name != 'pull_request'
+    #  run: |
+    #    nuget sources Add -Name github -Source https://nuget.pkg.github.com/${{github.repository_owner}}/index.json -Username ${{github.repository_owner}} -Password ${{github.token}}
+    #    nuget push *.nupkg -Source github -SkipDuplicate -ApiKey ${{github.token}}
