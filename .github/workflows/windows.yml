@@ -34,23 +34,23 @@ jobs:
       uses: shogo82148/actions-setup-perl@v1
     
     - name: Prepare the build directory
-      run: mkdir build
+      run: mkdir _build
       
-    - name: config
-      working-directory: build
+    - name: Config
+      working-directory: _build
       run: |
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        perl "${{github.workspace}}\openssl\Configure" --banner=Configured no-makedepend VC-WIN64A
+        perl "${{github.workspace}}\openssl\Configure" no-makedepend no-deprecated no-asm -DOPENSSL_SMALL_FOOTPRINT VC-WIN64A
+        perl configdata.pm --dump
         
-    - name: build
-      working-directory: build
+    - name: Build
+      working-directory: _build
       run: nmake 
       
     - name: install
       run: |
         mkdir dest
         nmake install DESTDIR=dest
-      working-directory: build
+      working-directory: _build
       
     #- name: Pack NuGet (Package)
     #  run: nuget pack openssl-1.1.0e-vc143.nuspec
